@@ -15,5 +15,14 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^12.1@dev"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "8.0.x-dev",
+        "illuminate/cache": "^13.0@dev",
+        "illuminate/filesystem": "^13.0@dev",
+        "illuminate/container": "^13.0@dev",
+        "illuminate/contracts": "^13.0@dev"
+    }
 }
