@@ -1,0 +1,19 @@
+{
+    "name": "fukaeridesui/sui-rpc-client",
+    "description": "A PHP SDK for interacting with the Sui blockchain",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Fukaeridesui\\SuiRpcClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fukaeridesui",
+            "email": "fukaeri260@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
