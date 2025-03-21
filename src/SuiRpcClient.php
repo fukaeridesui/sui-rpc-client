@@ -15,11 +15,11 @@ class SuiRpcClient implements SuiRpcClientInterface
     private string $rpcUrl;
 
     /**
-     * @param string $rpcUrl RPC URL (例: https://fullnode.mainnet.sui.io:443)
-     * @param Client|null $httpClient 使用するHTTPクライアント
-     * @param array $clientOptions Guzzleクライアントオプション
+     * @param string $rpcUrl RPC URL (e.g. https://fullnode.mainnet.sui.io:443)
+     * @param Client|null $httpClient HTTP Client
+     * @param array $clientOptions Guzzle Client Options
      */
-    public function __construct(string $rpcUrl, ?Client $httpClient = null, array $clientOptions = [])
+    public function __construct(string $rpcUrl = 'https://fullnode.mainnet.sui.io:443', ?Client $httpClient = null, array $clientOptions = [])
     {
         $this->rpcUrl = $rpcUrl;
         $defaultOptions = ['base_uri' => $rpcUrl];
@@ -51,12 +51,12 @@ class SuiRpcClient implements SuiRpcClientInterface
     }
 
     /**
-     * JSON-RPCリクエスト共通処理
+     * Common JSON-RPC Request Processing
      * 
-     * @param string $method RPC メソッド名
-     * @param array $params RPC パラメータ
-     * @return array レスポンス結果
-     * @throws SuiRpcException RPC エラー発生時
+     * @param string $method RPC Method Name
+     * @param array $params RPC Parameters
+     * @return array Response Result
+     * @throws SuiRpcException RPC Error Occurs
      */
     private function request(string $method, array $params = []): array
     {

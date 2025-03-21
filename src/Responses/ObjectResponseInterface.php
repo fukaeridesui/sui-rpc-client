@@ -3,57 +3,57 @@
 namespace Fukaeridesui\SuiRpcClient\Responses;
 
 /**
- * Sui オブジェクトレスポンスインターフェース
+ * Sui Object Response Interface
  */
 interface ObjectResponseInterface
 {
     /**
-     * オブジェクトIDを取得
+     * Get Object ID
      */
     public function getObjectId(): string;
 
     /**
-     * オブジェクト所有者を取得
+     * Get Object Owner
      */
     public function getOwner(): string;
 
     /**
-     * オブジェクトの型を取得
+     * Get Object Type
      */
     public function getType(): ?string;
 
     /**
-     * オブジェクトの内容を取得
+     * Get Object Content
      */
     public function getContent(): array;
 
     /**
-     * オブジェクトのダイジェストを取得
+     * Get Object Digest
      */
     public function getDigest(): ?string;
 
     /**
-     * オブジェクトのバージョンを取得
+     * Get Object Version
      */
     public function getVersion(): ?string;
 
     /**
-     * ストレージリベートを取得
+     * Get Storage Rebate
      */
     public function getStorageRebate(): ?int;
 
     /**
-     * 前回のトランザクションハッシュを取得
+     * Get Previous Transaction Hash
      */
     public function getPreviousTransaction(): ?string;
 
     /**
-     * 表示データを取得
+     * Get Display Data
      */
     public function getDisplay(): ?array;
 
     /**
-     * レスポンスを配列に変換
+     * Convert Response to Array
      */
     public function toArray(): array;
 }

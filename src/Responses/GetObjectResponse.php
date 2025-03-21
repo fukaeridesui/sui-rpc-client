@@ -8,8 +8,8 @@ use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 class GetObjectResponse extends BaseObjectResponse
 {
     /**
-     * @param array $response レスポンスデータ
-     * @throws SuiRpcException 不正なレスポンス構造の場合
+     * @param array $response Response Data 
+     * @throws SuiRpcException Invalid Response Structure
      */
     public function __construct(array $response)
     {
@@ -25,7 +25,7 @@ class GetObjectResponse extends BaseObjectResponse
 
         $this->objectId = $data['objectId'];
 
-        // owner フィールドは複数の形式でありうる
+        // owner field can have multiple formats
         if (isset($data['owner'])) {
             if (isset($data['owner']['AddressOwner'])) {
                 $this->owner = $data['owner']['AddressOwner'];
@@ -45,7 +45,7 @@ class GetObjectResponse extends BaseObjectResponse
         $this->type = $data['type'] ?? null;
         $this->content = $data['content'] ?? [];
 
-        // 追加情報があれば保存
+        // additional information if exists
         $this->digest = $data['digest'] ?? null;
         $this->version = $data['version'] ?? null;
         $this->storageRebate = isset($data['storageRebate']) ? (int)$data['storageRebate'] : null;

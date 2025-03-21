@@ -29,7 +29,6 @@ class SuiRpcClientTest extends TestCase
 
         $jsonString = json_encode($mockResult);
 
-        // StreamInterfaceの実際の実装を使用
         $stream = Utils::streamFor($jsonString);
 
         $mockResponse = $this->createMock(ResponseInterface::class);

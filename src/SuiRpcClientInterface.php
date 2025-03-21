@@ -6,22 +6,22 @@ use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 
 /**
- * Sui JSON-RPC クライアントインターフェース
+ * Sui JSON-RPC Client Interface
  */
 interface SuiRpcClientInterface
 {
     /**
-     * オブジェクトIDによってオブジェクトを取得
+     * Get Object by Object ID
      *
-     * @param string $objectId 取得するオブジェクトのID
-     * @param GetObjectOptions|null $options 取得オプション
-     * @return ObjectResponseInterface レスポンスオブジェクト
-     * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException RPCエラー発生時
+     * @param string $objectId Object ID
+     * @param GetObjectOptions|null $options Get Object Options
+     * @return ObjectResponseInterface Response Object
+     * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException RPC Error
      */
     public function getObject(string $objectId, ?GetObjectOptions $options = null): ObjectResponseInterface;
 
     /**
-     * クライアントの基本URLを取得
+     * Get RPC URL
      *
      * @return string RPC URL
      */

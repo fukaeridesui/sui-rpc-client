@@ -3,22 +3,22 @@
 namespace Fukaeridesui\SuiRpcClient\Exception;
 
 /**
- * Sui RPC エラー例外
+ * Sui RPC Exception
  */
 class SuiRpcException extends \Exception
 {
     /**
-     * @var array|null JSON-RPCエラー情報
+     * @var array|null JSON-RPC Error Information
      */
     private ?array $rpcError;
 
     /**
-     * @param array|null $error JSON-RPCエラー情報
-     * @param string|null $message エラーメッセージ
-     * @param int $code エラーコード
-     * @param \Throwable|null $previous 前の例外
+     * @param array|null $error JSON-RPC Error Information
+     * @param string|null $message Error Message
+     * @param int $code Error Code
+     * @param \Throwable|null $previous Previous Exception
      */
-    public function __construct(?array $error = null, ?string $message = null, int $code = 0, \Throwable $previous = null)
+    public function __construct(?array $error = null, ?string $message = null, int $code = 0, ?\Throwable $previous = null)
     {
         $this->rpcError = $error;
 
@@ -32,7 +32,7 @@ class SuiRpcException extends \Exception
     }
 
     /**
-     * JSON-RPCエラー情報を取得
+     * Get JSON-RPC Error Information
      * 
      * @return array|null
      */

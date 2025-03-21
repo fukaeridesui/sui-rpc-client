@@ -9,7 +9,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     public readonly ?string $type;
     public readonly array $content;
 
-    // 追加プロパティ
+    // additional properties
     public readonly ?string $digest;
     public readonly ?string $version;
     public readonly ?int $storageRebate;
@@ -37,7 +37,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     }
 
     /**
-     * オブジェクトのダイジェストを取得
+     * Get Object Digest
      */
     public function getDigest(): ?string
     {
@@ -45,7 +45,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     }
 
     /**
-     * オブジェクトのバージョンを取得
+     * Get Object Version
      */
     public function getVersion(): ?string
     {
@@ -53,7 +53,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     }
 
     /**
-     * ストレージリベートを取得
+     * Get Storage Rebate
      */
     public function getStorageRebate(): ?int
     {
@@ -61,7 +61,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     }
 
     /**
-     * 前回のトランザクションハッシュを取得
+     * Get Previous Transaction Hash
      */
     public function getPreviousTransaction(): ?string
     {
@@ -69,7 +69,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
     }
 
     /**
-     * 表示データを取得
+     * Get Display Data
      */
     public function getDisplay(): ?array
     {
@@ -85,7 +85,7 @@ abstract class BaseObjectResponse implements ObjectResponseInterface
             'content' => $this->content,
         ];
 
-        // 追加プロパティが設定されている場合のみ含める
+        // Include additional properties only if they are set
         if ($this->digest !== null) {
             $result['digest'] = $this->digest;
         }
