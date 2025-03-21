@@ -2,7 +2,7 @@
 
 A PHP RPC client for querying the Sui blockchain.
 
-## Installation
+## Installation (not available yet!!!)
 
 ```bash
 composer require fukaeridesui/sui-rpc-client
@@ -16,11 +16,14 @@ composer require fukaeridesui/sui-rpc-client
 use Fukaeridesui\SuiRpcClient\SuiRpcClient;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 
-// Initialize the client with the RPC endpoint URL
-$client = new SuiRpcClient('https://fullnode.mainnet.sui.io:443');
+// Initialize the client with the default RPC endpoint URL (mainnet)
+$client = new SuiRpcClient();
+
+// Or specify a custom RPC endpoint
+// $client = new SuiRpcClient('https://fullnode.testnet.sui.io:443');
 
 // Get an object by its ID
-$objectId = '0x5f8331a48a5afd38be7f70a43d3c898f3b58a828c859f79ecf87c44b2856ac94';
+$objectId = '0x0000000000000000000000000000000000000000000000000000000000000005';
 $options = new GetObjectOptions([
     'showType' => true,
     'showContent' => true,
@@ -75,9 +78,16 @@ Run examples:
 php examples/get_object.php
 
 # Explore a specific object
-php examples/explore_object.php 0x5f8331a48a5afd38be7f70a43d3c898f3b58a828c859f79ecf87c44b2856ac94
+php examples/explore_object.php 0x0000000000000000000000000000000000000000000000000000000000000005
+
+# Explore a specific object with network
+php examples/explore_object.php 0x0000000000000000000000000000000000000000000000000000000000000005 testnet
 ```
 
-## License
+## Available Networks
 
-MIT
+The client supports the following Sui networks by default:
+
+- Mainnet: `https://fullnode.mainnet.sui.io:443` (default)
+- Testnet: `https://fullnode.testnet.sui.io:443` 
+- Devnet: `https://fullnode.devnet.sui.io:443`
