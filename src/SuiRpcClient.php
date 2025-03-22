@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\GetObjectResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
+use Fukaeridesui\SuiRpcClient\Responses\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
 class SuiRpcClient implements SuiRpcClientInterface
@@ -40,6 +41,40 @@ class SuiRpcClient implements SuiRpcClientInterface
         ]);
 
         return new GetObjectResponse($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMultipleObjects(array $objectIds, ?GetObjectOptions $options = null): MultipleObjectsResponse
+    {
+        $options ??= new GetObjectOptions();
+
+        if (empty($objectIds)) {
+            return new MultipleObjectsResponse([]);
+        }
+
+        foreach ($objectIds as $objectId) {
+            if (!is_string($objectId)) {
+                throw new SuiRpcException(null, 'Invalid objectId: All elements must be strings');
+            }
+        }
+
+        $result = $this->request('sui_multiGetObjects', [
+            $objectIds,
+            $options->toArray()
+        ]);
+
+        if (!is_array($result)) {
+            throw new SuiRpcException(null, 'Invalid response: Expected array of objects');
+        }
+
+        $responses = [];
+        foreach ($result as $objectData) {
+            $responses[] = new GetObjectResponse($objectData);
+        }
+
+        return new MultipleObjectsResponse($responses);
     }
 
     /**
