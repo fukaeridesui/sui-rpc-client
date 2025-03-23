@@ -3,7 +3,7 @@
 namespace Fukaeridesui\SuiRpcClient\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Fukaeridesui\SuiRpcClient\Responses\MultipleObjectsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 
 class MultipleObjectsResponseTest extends TestCase

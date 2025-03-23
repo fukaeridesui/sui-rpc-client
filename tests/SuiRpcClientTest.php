@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Fukaeridesui\SuiRpcClient\SuiRpcClient;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
+use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
@@ -34,8 +35,9 @@ class SuiRpcClientTest extends TestCase
         $mockResponse = $this->createMock(ResponseInterface::class);
         $mockResponse->method('getBody')->willReturn($stream);
 
-        $mockHttpClient = $this->createMock(Client::class);
-        $mockHttpClient->method('post')->willReturn($mockResponse);
+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+        $mockHttpClient->method('request')->willReturn($mockResult['result']);
+        $mockHttpClient->method('getRpcUrl')->willReturn('https://mock.node');
 
         $rpcClient = new SuiRpcClient('https://mock.node', $mockHttpClient);
 

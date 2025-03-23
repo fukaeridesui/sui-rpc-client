@@ -1,19 +1,25 @@
 <?php
 
-namespace Fukaeridesui\SuiRpcClient\Responses;
+namespace Fukaeridesui\SuiRpcClient\Responses\Read;
+
+use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 
 /**
- * multiple objects response
+ * Collection class that holds multiple object responses
+ * 
+ * This class manages multiple ObjectResponseInterface instances and
+ * provides methods to access them.
+ * It handles responses from the sui_multiGetObjects API call.
  */
 class MultipleObjectsResponse
 {
     /**
-     * @var ObjectResponseInterface[] objects
+     * @var ObjectResponseInterface[] Array of objects
      */
     private array $objects;
 
     /**
-     * @param ObjectResponseInterface[] $objects objects
+     * @param ObjectResponseInterface[] $objects Array of objects
      */
     public function __construct(array $objects)
     {
@@ -21,9 +27,9 @@ class MultipleObjectsResponse
     }
 
     /**
-     * get objects
+     * Get all objects
      *
-     * @return ObjectResponseInterface[]
+     * @return ObjectResponseInterface[] Array of objects
      */
     public function getObjects(): array
     {
@@ -31,10 +37,10 @@ class MultipleObjectsResponse
     }
 
     /**
-     * get object at index
+     * Get object at specified index
      *
-     * @param int $index index
-     * @return ObjectResponseInterface|null object at index or null
+     * @param int $index Index
+     * @return ObjectResponseInterface|null Object or null (if index is out of range)
      */
     public function getObjectAt(int $index): ?ObjectResponseInterface
     {
@@ -42,9 +48,9 @@ class MultipleObjectsResponse
     }
 
     /**
-     * get number of objects
+     * Get number of objects
      *
-     * @return int number of objects
+     * @return int Number of objects
      */
     public function count(): int
     {
@@ -52,9 +58,9 @@ class MultipleObjectsResponse
     }
 
     /**
-     * get object ids
+     * Get IDs of all objects
      *
-     * @return string[] object ids
+     * @return string[] Array of object IDs
      */
     public function getObjectIds(): array
     {
@@ -64,9 +70,9 @@ class MultipleObjectsResponse
     }
 
     /**
-     * get all objects as array
+     * Get all objects as array
      *
-     * @return array objects as array
+     * @return array Array of objects
      */
     public function toArray(): array
     {
@@ -76,10 +82,10 @@ class MultipleObjectsResponse
     }
 
     /**
-     * find object by object id
+     * Find object by ID
      *
-     * @param string $objectId object id
-     * @return ObjectResponseInterface|null found object or null
+     * @param string $objectId Object ID to search for
+     * @return ObjectResponseInterface|null Found object or null
      */
     public function findById(string $objectId): ?ObjectResponseInterface
     {
