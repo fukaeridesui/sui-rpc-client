@@ -63,6 +63,7 @@ The client supports the following Sui networks by default:
 - Mainnet: `https://fullnode.mainnet.sui.io:443` (default)
 - Testnet: `https://fullnode.testnet.sui.io:443`
 - Devnet: `https://fullnode.devnet.sui.io:443`
+- Or add custom network when instantiate SuiRpcClient
 
 ## Architecture
 
