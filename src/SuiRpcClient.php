@@ -9,7 +9,9 @@ use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use Fukaeridesui\SuiRpcClient\Interface\ReadApiInterface;
 use Fukaeridesui\SuiRpcClient\Http\GuzzleHttpClient;
 use Fukaeridesui\SuiRpcClient\Http\Psr18HttpClient;
+use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Psr\Http\Client\ClientInterface;
@@ -110,6 +112,18 @@ class SuiRpcClient
     public function getAllBalances(string $owner): array
     {
         return $this->coinQueryApi->getAllBalances($owner);
+    }
+
+    /**
+     * Direct access to getAllCoins method (for convenience)
+     * 
+     * @param string $owner Owner's Sui address
+     * @param GetAllCoinsOptions|null $options Pagination options
+     * @return GetAllCoinsResponse Response containing coin objects and pagination info
+     */
+    public function getAllCoins(string $owner, ?GetAllCoinsOptions $options = null): GetAllCoinsResponse
+    {
+        return $this->coinQueryApi->getAllCoins($owner, $options);
     }
 
     /**
