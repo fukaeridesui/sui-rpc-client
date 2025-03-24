@@ -10,6 +10,10 @@ use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
+use Fukaeridesui\SuiRpcClient\Http\Psr18HttpClient;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class SuiRpcClientTest extends TestCase
 {
@@ -49,5 +53,41 @@ class SuiRpcClientTest extends TestCase
         $this->assertEquals('0xMOCKOWNER', $response->getOwner());
         $this->assertEquals('0x2::coin::Coin<0x2::sui::SUI>', $response->getType());
         $this->assertIsArray($response->getContent());
+    }
+
+    public function testCreateWithDefaultConstructor()
+    {
+        $client = new SuiRpcClient();
+        $httpClient = $client->getHttpClient();
+
+        $this->assertInstanceOf(HttpClientInterface::class, $httpClient);
+    }
+
+    public function testCreateWithCustomHttpClient()
+    {
+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+        $client = new SuiRpcClient('https://example.com', $mockHttpClient);
+
+        $this->assertSame($mockHttpClient, $client->getHttpClient());
+    }
+
+    public function testCreateWithPsr18Client()
+    {
+        $mockPsrClient = $this->createMock(ClientInterface::class);
+        $mockRequestFactory = $this->createMock(RequestFactoryInterface::class);
+        $mockStreamFactory = $this->createMock(StreamFactoryInterface::class);
+
+        $client = SuiRpcClient::createWithPsr18Client(
+            'https://example.com',
+            $mockPsrClient,
+            $mockRequestFactory,
+            $mockStreamFactory
+        );
+
+        $httpClient = $client->getHttpClient();
+
+        $this->assertInstanceOf(Psr18HttpClient::class, $httpClient);
+        $this->assertSame($mockPsrClient, $httpClient->getPsrClient());
+        $this->assertEquals('https://example.com', $httpClient->getRpcUrl());
     }
 }

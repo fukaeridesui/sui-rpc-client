@@ -32,6 +32,7 @@ Check the `examples` directory for sample scripts:
 - `explore_object.php`: Allows you to specify any object ID as a command-line argument
 - `get_multiple_objects.php`: Demonstrates fetching multiple objects at once
 - `get_all_balances.php`: Shows how to retrieve all coin balances for an address
+- `use_custom_client.php`: Shows how to use custom PSR-18 HTTP clients
 
 Run examples:
 
@@ -54,6 +55,9 @@ php examples/get_multiple_objects.php 0x123... 0x456...
 php examples/get_all_balances.php
 # Get all balances for a specific address
 php examples/get_all_balances.php 0x789...
+
+# Try the PSR-18 client example
+php examples/use_custom_client.php
 ```
 
 ## Available Networks

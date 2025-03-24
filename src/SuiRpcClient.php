@@ -8,9 +8,13 @@ use Fukaeridesui\SuiRpcClient\Interface\CoinQueryApiInterface;
 use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use Fukaeridesui\SuiRpcClient\Interface\ReadApiInterface;
 use Fukaeridesui\SuiRpcClient\Http\GuzzleHttpClient;
+use Fukaeridesui\SuiRpcClient\Http\Psr18HttpClient;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 /**
  * Sui RPC Client
@@ -32,6 +36,25 @@ class SuiRpcClient
         $this->httpClient = $httpClient ?? new GuzzleHttpClient($rpcUrl);
         $this->readApi = new ReadApi($this->httpClient);
         $this->coinQueryApi = new CoinQueryApi($this->httpClient);
+    }
+
+    /**
+     * Create a client with a PSR-18 HTTP client
+     * 
+     * @param string $rpcUrl RPC URL
+     * @param ClientInterface $httpClient PSR-18 HTTP client
+     * @param RequestFactoryInterface $requestFactory PSR-17 request factory
+     * @param StreamFactoryInterface $streamFactory PSR-17 stream factory
+     * @return self
+     */
+    public static function createWithPsr18Client(
+        string $rpcUrl,
+        ClientInterface $httpClient,
+        RequestFactoryInterface $requestFactory,
+        StreamFactoryInterface $streamFactory
+    ): self {
+        $client = new Psr18HttpClient($rpcUrl, $httpClient, $requestFactory, $streamFactory);
+        return new self($rpcUrl, $client);
     }
 
     /**

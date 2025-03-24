@@ -1,28 +1,35 @@
 {
-    "name": "fukaeridesui/sui-rpc-client",
-    "description": "A PHP SDK for interacting with the Sui blockchain",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Fukaeridesui\\SuiRpcClient\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Fukaeridesui",
-            "email": "fukaeri260@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require-dev": {
-        "phpunit/phpunit": "^12.1@dev"
-    },
-    "require": {
-        "guzzlehttp/guzzle": "8.0.x-dev",
-        "illuminate/cache": "^13.0@dev",
-        "illuminate/filesystem": "^13.0@dev",
-        "illuminate/container": "^13.0@dev",
-        "illuminate/contracts": "^13.0@dev"
+  "name": "fukaeridesui/sui-rpc-client",
+  "description": "A PHP SDK for interacting with the Sui blockchain",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Fukaeridesui\\SuiRpcClient\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "Fukaeridesui",
+      "email": "fukaeri260@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpunit/phpunit": "^12.1@dev",
+    "guzzlehttp/guzzle": "8.0.x-dev"
+  },
+  "require": {
+    "php": "^8.1",
+    "psr/http-client": "^1.0",
+    "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.1",
+    "illuminate/cache": "^13.0@dev",
+    "illuminate/filesystem": "^13.0@dev",
+    "illuminate/container": "^13.0@dev",
+    "illuminate/contracts": "^13.0@dev"
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "Required if using the default GuzzleHttpClient implementation"
+  }
 }

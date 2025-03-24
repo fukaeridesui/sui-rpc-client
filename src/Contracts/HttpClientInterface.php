@@ -2,6 +2,8 @@
 
 namespace Fukaeridesui\SuiRpcClient\Contracts;
 
+use Psr\Http\Client\ClientInterface;
+
 interface HttpClientInterface
 {
     /**
@@ -20,4 +22,11 @@ interface HttpClientInterface
      * @return string RPC URL
      */
     public function getRpcUrl(): string;
+
+    /**
+     * Get underlying PSR-18 HTTP client
+     *
+     * @return ClientInterface|null The PSR-18 client (if available)
+     */
+    public function getPsrClient(): ?ClientInterface;
 }
