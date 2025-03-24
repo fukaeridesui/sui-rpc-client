@@ -4,3 +4,5 @@
 /build/
 /storage/
 .phpunit.result.cache
+
+memo.txt
