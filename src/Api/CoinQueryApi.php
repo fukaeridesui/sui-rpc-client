@@ -7,6 +7,7 @@ use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
@@ -66,6 +67,40 @@ class CoinQueryApi implements CoinQueryApiInterface
         }
 
         $result = $this->httpClient->request('suix_getAllCoins', $params);
+
+        if (!is_array($result)) {
+            throw new SuiRpcException(null, 'Invalid response: Expected paginated coin data');
+        }
+
+        return new GetAllCoinsResponse($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCoins(string $owner, GetCoinsOptions $options): GetAllCoinsResponse
+    {
+        if ($options->coinType === null) {
+            throw new SuiRpcException(null, 'Coin type is required for getCoins');
+        }
+
+        $params = [$owner, $options->coinType];
+
+        // Add cursor if it exists
+        if ($options->cursor !== null) {
+            $params[] = $options->cursor;
+        }
+
+        // Add limit if it exists
+        if ($options->limit !== null) {
+            // If cursor is not set but limit is, add null for cursor
+            if ($options->cursor === null && count($params) === 2) {
+                $params[] = null;
+            }
+            $params[] = $options->limit;
+        }
+
+        $result = $this->httpClient->request('suix_getCoins', $params);
 
         if (!is_array($result)) {
             throw new SuiRpcException(null, 'Invalid response: Expected paginated coin data');

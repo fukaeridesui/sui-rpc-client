@@ -5,6 +5,7 @@ namespace Fukaeridesui\SuiRpcClient\Interface;
 use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
@@ -29,6 +30,16 @@ interface CoinQueryApiInterface
      * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException
      */
     public function getAllCoins(string $owner, ?GetAllCoinsOptions $options = null): GetAllCoinsResponse;
+
+    /**
+     * Get coins of a specific type owned by an address with pagination support
+     *
+     * @param string $owner Owner's Sui address
+     * @param GetCoinsOptions $options Options with coin type (required) and pagination
+     * @return GetAllCoinsResponse Response containing coin objects and pagination info
+     * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException
+     */
+    public function getCoins(string $owner, GetCoinsOptions $options): GetAllCoinsResponse;
 
     /**
      * Get balance for a specific coin type owned by an address

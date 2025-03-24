@@ -4,16 +4,9 @@ namespace Fukaeridesui\SuiRpcClient\Options;
 
 /**
  * Options for retrieving all coins owned by an address
+ * Used by suix_getAllCoins API method
  */
-class GetAllCoinsOptions extends BaseOptions
+class GetAllCoinsOptions extends PaginationOptions
 {
-    /**
-     * Optional paging cursor
-     */
-    public ?string $cursor = null;
-
-    /**
-     * Maximum number of items per page
-     */
-    public ?int $limit = null;
+    // Inherits cursor and limit from parent class
 }

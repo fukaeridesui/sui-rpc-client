@@ -12,6 +12,7 @@ use Fukaeridesui\SuiRpcClient\Http\Psr18HttpClient;
 use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
@@ -128,6 +129,18 @@ class SuiRpcClient
     public function getAllCoins(string $owner, ?GetAllCoinsOptions $options = null): GetAllCoinsResponse
     {
         return $this->coinQueryApi->getAllCoins($owner, $options);
+    }
+
+    /**
+     * Direct access to getCoins method (for convenience)
+     * 
+     * @param string $owner Owner's Sui address
+     * @param GetCoinsOptions $options Options with coin type and pagination
+     * @return GetAllCoinsResponse Response containing coin objects and pagination info
+     */
+    public function getCoins(string $owner, GetCoinsOptions $options): GetAllCoinsResponse
+    {
+        return $this->coinQueryApi->getCoins($owner, $options);
     }
 
     /**
