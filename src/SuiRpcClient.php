@@ -10,7 +10,11 @@ use Fukaeridesui\SuiRpcClient\Interface\ReadApiInterface;
 use Fukaeridesui\SuiRpcClient\Http\GuzzleHttpClient;
 use Fukaeridesui\SuiRpcClient\Http\Psr18HttpClient;
 use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
@@ -144,5 +148,28 @@ class SuiRpcClient
     public function getHttpClient(): HttpClientInterface
     {
         return $this->httpClient;
+    }
+
+    /**
+     * Direct access to getBalance method (for convenience)
+     * 
+     * @param string $owner Sui address of the owner
+     * @param GetBalanceOptions|null $options Get options
+     * @return BalanceResponse Balance response
+     */
+    public function getBalance(string $owner, ?GetBalanceOptions $options = null): BalanceResponse
+    {
+        return $this->coinQueryApi->getBalance($owner, $options);
+    }
+
+    /**
+     * Direct access to getCoinMetadata method (for convenience)
+     * 
+     * @param GetCoinMetadataOptions $options Options with coin type
+     * @return CoinMetadataResponse Coin metadata response
+     */
+    public function getCoinMetadata(GetCoinMetadataOptions $options): CoinMetadataResponse
+    {
+        return $this->coinQueryApi->getCoinMetadata($options);
     }
 }

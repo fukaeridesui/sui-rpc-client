@@ -5,7 +5,10 @@ namespace Fukaeridesui\SuiRpcClient\Api;
 use Fukaeridesui\SuiRpcClient\Interface\CoinQueryApiInterface;
 use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use Fukaeridesui\SuiRpcClient\Options\GetAllCoinsOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
@@ -69,5 +72,47 @@ class CoinQueryApi implements CoinQueryApiInterface
         }
 
         return new GetAllCoinsResponse($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBalance(string $owner, ?GetBalanceOptions $options = null): BalanceResponse
+    {
+        $options ??= new GetBalanceOptions();
+        $params = [$owner];
+
+        // Add coin type if specified, otherwise the API defaults to SUI token
+        if ($options->coinType !== null) {
+            $params[] = $options->coinType;
+        }
+
+        $result = $this->httpClient->request('suix_getBalance', $params);
+
+        if (!is_array($result)) {
+            throw new SuiRpcException(null, 'Invalid response: Expected balance data');
+        }
+
+        return new BalanceResponse($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCoinMetadata(GetCoinMetadataOptions $options): CoinMetadataResponse
+    {
+        if ($options->coinType === null) {
+            throw new SuiRpcException(null, 'Coin type is required for getCoinMetadata');
+        }
+
+        $params = [$options->coinType];
+
+        $result = $this->httpClient->request('suix_getCoinMetadata', $params);
+
+        if (!is_array($result)) {
+            throw new SuiRpcException(null, 'Invalid response: Expected coin metadata');
+        }
+
+        return new CoinMetadataResponse($result);
     }
 }
