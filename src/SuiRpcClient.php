@@ -19,6 +19,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\TotalSupplyResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
+use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -196,5 +197,15 @@ class SuiRpcClient
     public function getTotalSupply(string $coinType): TotalSupplyResponse
     {
         return $this->coinQueryApi->getTotalSupply($coinType);
+    }
+
+    /**
+     * Direct access to getChainIdentifier method (for convenience)
+     * 
+     * @return ChainIdentifierResponse Chain identifier response
+     */
+    public function getChainIdentifier(): ChainIdentifierResponse
+    {
+        return $this->readApi->getChainIdentifier();
     }
 }

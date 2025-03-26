@@ -9,6 +9,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\GetObjectResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
+use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 
 class ReadApi implements ReadApiInterface
 {
@@ -69,5 +70,14 @@ class ReadApi implements ReadApiInterface
         }
 
         return new MultipleObjectsResponse($responses);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChainIdentifier(): ChainIdentifierResponse
+    {
+        $result = $this->httpClient->request('sui_getChainIdentifier', []);
+        return new ChainIdentifierResponse($result);
     }
 }

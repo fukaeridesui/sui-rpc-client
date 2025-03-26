@@ -7,26 +7,25 @@ use Psr\Http\Client\ClientInterface;
 interface HttpClientInterface
 {
     /**
-     * Send JSON-RPC request
-     *
-     * @param string $method Method name
-     * @param array $params Parameters
-     * @return array Response result
-     * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException
+     * Send a JSON-RPC request
+     * 
+     * @param string $method RPC method name
+     * @param array $params RPC parameters
+     * @return mixed RPC response result
      */
-    public function request(string $method, array $params = []): array;
+    public function request(string $method, array $params = []): mixed;
 
     /**
      * Get RPC URL
-     *
+     * 
      * @return string RPC URL
      */
     public function getRpcUrl(): string;
 
     /**
-     * Get underlying PSR-18 HTTP client
-     *
-     * @return ClientInterface|null The PSR-18 client (if available)
+     * Get PSR-18 HTTP client
+     * 
+     * @return ClientInterface|null PSR-18 HTTP client
      */
     public function getPsrClient(): ?ClientInterface;
 }

@@ -4,6 +4,7 @@ namespace Fukaeridesui\SuiRpcClient\Interface;
 
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
+use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 
 interface ReadApiInterface
@@ -27,4 +28,11 @@ interface ReadApiInterface
      * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException
      */
     public function getMultipleObjects(array $objectIds, ?GetObjectOptions $options = null): MultipleObjectsResponse;
+
+    /**
+     * Get chain identifier
+     *
+     * @return ChainIdentifierResponse Chain identifier response
+     */
+    public function getChainIdentifier(): ChainIdentifierResponse;
 }

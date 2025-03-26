@@ -10,30 +10,30 @@ use Psr\Http\Client\ClientInterface;
 
 class GuzzleHttpClient implements HttpClientInterface
 {
-    private Client $httpClient;
+    private Client $client;
     private string $rpcUrl;
 
     /**
      * @param string $rpcUrl RPC URL
-     * @param array $clientOptions Guzzle client options
      */
-    public function __construct(
-        string $rpcUrl = 'https://fullnode.mainnet.sui.io:443',
-        array $clientOptions = []
-    ) {
+    public function __construct(string $rpcUrl)
+    {
         $this->rpcUrl = $rpcUrl;
-        $defaultOptions = ['base_uri' => $rpcUrl];
-        $options = array_merge($defaultOptions, $clientOptions);
-        $this->httpClient = new Client($options);
+        $this->client = new Client([
+            'base_uri' => $rpcUrl,
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function request(string $method, array $params = []): array
+    public function request(string $method, array $params = []): mixed
     {
         try {
-            $response = $this->httpClient->post('', [
+            $response = $this->client->post('', [
                 'json' => [
                     'jsonrpc' => '2.0',
                     'id' => 1,
@@ -42,27 +42,15 @@ class GuzzleHttpClient implements HttpClientInterface
                 ]
             ]);
 
-            $contents = $response->getBody()->getContents();
-            $body = json_decode($contents, true);
+            $result = json_decode($response->getBody()->getContents(), true);
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new SuiRpcException(
-                    null,
-                    'JSON decode error: ' . json_last_error_msg() . ', Response: ' . substr($contents, 0, 100)
-                );
+            if (isset($result['error'])) {
+                throw new SuiRpcException($result['error']['code'], $result['error']['message']);
             }
 
-            if (isset($body['error'])) {
-                throw new SuiRpcException($body['error']);
-            }
-
-            if (!isset($body['result'])) {
-                throw new SuiRpcException(null, 'Invalid RPC response: missing result field');
-            }
-
-            return $body['result'];
+            return $result['result'];
         } catch (GuzzleException $e) {
-            throw new SuiRpcException(null, 'HTTP request failed: ' . $e->getMessage(), 0, $e);
+            throw new SuiRpcException(null, $e->getMessage());
         }
     }
 
@@ -79,6 +67,6 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function getPsrClient(): ?ClientInterface
     {
-        return $this->httpClient;
+        return $this->client;
     }
 }
