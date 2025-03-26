@@ -9,6 +9,7 @@ use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\TotalSupplyResponse;
 
 interface CoinQueryApiInterface
 {
@@ -59,4 +60,12 @@ interface CoinQueryApiInterface
      * @throws \Fukaeridesui\SuiRpcClient\Exception\SuiRpcException
      */
     public function getCoinMetadata(GetCoinMetadataOptions $options): CoinMetadataResponse;
+
+    /**
+     * Get total supply of a coin type
+     *
+     * @param string $coinType Coin type
+     * @return TotalSupplyResponse Total supply response
+     */
+    public function getTotalSupply(string $coinType): TotalSupplyResponse;
 }

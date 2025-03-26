@@ -11,6 +11,7 @@ use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Coin\TotalSupplyResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
 class CoinQueryApi implements CoinQueryApiInterface
@@ -149,5 +150,11 @@ class CoinQueryApi implements CoinQueryApiInterface
         }
 
         return new CoinMetadataResponse($result);
+    }
+
+    public function getTotalSupply(string $coinType): TotalSupplyResponse
+    {
+        $response = $this->httpClient->request('suix_getTotalSupply', [$coinType]);
+        return new TotalSupplyResponse($response);
     }
 }
