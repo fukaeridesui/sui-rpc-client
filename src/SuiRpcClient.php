@@ -67,6 +67,26 @@ class SuiRpcClient
     }
 
     /**
+     * Get RPC URL
+     * 
+     * @return string RPC URL
+     */
+    public function getRpcUrl(): string
+    {
+        return $this->httpClient->getRpcUrl();
+    }
+
+    /**
+     * Get HTTP client
+     * 
+     * @return HttpClientInterface
+     */
+    public function getHttpClient(): HttpClientInterface
+    {
+        return $this->httpClient;
+    }
+
+    /**
      * Access to Read API
      * 
      * @return ReadApiInterface
@@ -84,6 +104,18 @@ class SuiRpcClient
     public function coin(): CoinQueryApiInterface
     {
         return $this->coinQueryApi;
+    }
+
+    //Read APIs
+
+    /**
+     * Direct access to getChainIdentifier method (for convenience)
+     * 
+     * @return ChainIdentifierResponse Chain identifier response
+     */
+    public function getChainIdentifier(): ChainIdentifierResponse
+    {
+        return $this->readApi->getChainIdentifier();
     }
 
     /**
@@ -109,6 +141,8 @@ class SuiRpcClient
     {
         return $this->readApi->getMultipleObjects($objectIds, $options);
     }
+
+    //Coin Query APIs
 
     /**
      * Direct access to getAllBalances method (for convenience)
@@ -146,26 +180,6 @@ class SuiRpcClient
     }
 
     /**
-     * Get RPC URL
-     * 
-     * @return string RPC URL
-     */
-    public function getRpcUrl(): string
-    {
-        return $this->httpClient->getRpcUrl();
-    }
-
-    /**
-     * Get HTTP client
-     * 
-     * @return HttpClientInterface
-     */
-    public function getHttpClient(): HttpClientInterface
-    {
-        return $this->httpClient;
-    }
-
-    /**
      * Direct access to getBalance method (for convenience)
      * 
      * @param string $owner Sui address of the owner
@@ -197,15 +211,5 @@ class SuiRpcClient
     public function getTotalSupply(string $coinType): TotalSupplyResponse
     {
         return $this->coinQueryApi->getTotalSupply($coinType);
-    }
-
-    /**
-     * Direct access to getChainIdentifier method (for convenience)
-     * 
-     * @return ChainIdentifierResponse Chain identifier response
-     */
-    public function getChainIdentifier(): ChainIdentifierResponse
-    {
-        return $this->readApi->getChainIdentifier();
     }
 }
