@@ -45,7 +45,7 @@ class GuzzleHttpClient implements HttpClientInterface
             $result = json_decode($response->getBody()->getContents(), true);
 
             if (isset($result['error'])) {
-                throw new SuiRpcException($result['error']['code'], $result['error']['message']);
+                throw new SuiRpcException($result['error'], $result['error']['message'] ?? null);
             }
 
             return $result['result'];

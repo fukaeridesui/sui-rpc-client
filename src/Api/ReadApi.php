@@ -10,6 +10,7 @@ use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 
 class ReadApi implements ReadApiInterface
 {
@@ -79,5 +80,14 @@ class ReadApi implements ReadApiInterface
     {
         $result = $this->httpClient->request('sui_getChainIdentifier', []);
         return new ChainIdentifierResponse($result);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCheckpoint(string $sequenceNumber): CheckpointResponse
+    {
+        $response = $this->httpClient->request('sui_getCheckpoint', [$sequenceNumber]);
+        return new CheckpointResponse($response);
     }
 }

@@ -21,6 +21,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Coin\TotalSupplyResponse;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -123,7 +124,7 @@ class SuiRpcClient
      * 
      * @param string $objectId Object ID
      * @param GetObjectOptions|null $options Get options
-     * @return ObjectResponseInterface Response object
+     * @return GetObjectResponse Response object
      */
     public function getObject(string $objectId, ?GetObjectOptions $options = null): ObjectResponseInterface
     {
@@ -140,6 +141,17 @@ class SuiRpcClient
     public function getMultipleObjects(array $objectIds, ?GetObjectOptions $options = null): MultipleObjectsResponse
     {
         return $this->readApi->getMultipleObjects($objectIds, $options);
+    }
+
+    /**
+     * Get checkpoint.
+     *
+     * @param string $sequenceNumber Checkpoint sequence number
+     * @return CheckpointResponse
+     */
+    public function getCheckpoint(string $sequenceNumber): CheckpointResponse
+    {
+        return $this->readApi->getCheckpoint($sequenceNumber);
     }
 
     //Coin Query APIs

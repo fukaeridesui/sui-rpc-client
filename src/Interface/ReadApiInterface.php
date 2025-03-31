@@ -6,6 +6,7 @@ use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 
 interface ReadApiInterface
 {
@@ -35,4 +36,12 @@ interface ReadApiInterface
      * @return ChainIdentifierResponse Chain identifier response
      */
     public function getChainIdentifier(): ChainIdentifierResponse;
+
+    /**
+     * Get checkpoint.
+     *
+     * @param string $sequenceNumber Checkpoint sequence number
+     * @return CheckpointResponse
+     */
+    public function getCheckpoint(string $sequenceNumber): CheckpointResponse;
 }
