@@ -14,6 +14,7 @@ use Fukaeridesui\SuiRpcClient\Options\GetBalanceOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetCoinMetadataOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetCoinsOptions;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCheckpointsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\BalanceResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\CoinMetadataResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Coin\GetAllCoinsResponse;
@@ -22,6 +23,7 @@ use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -152,6 +154,17 @@ class SuiRpcClient
     public function getCheckpoint(string $sequenceNumber): CheckpointResponse
     {
         return $this->readApi->getCheckpoint($sequenceNumber);
+    }
+
+    /**
+     * Get checkpoints.
+     *
+     * @param GetCheckpointsOptions|null $options Options
+     * @return CheckpointsResponse
+     */
+    public function getCheckpoints(?GetCheckpointsOptions $options = null): CheckpointsResponse
+    {
+        return $this->readApi->getCheckpoints($options);
     }
 
     //Coin Query APIs

@@ -3,10 +3,12 @@
 namespace Fukaeridesui\SuiRpcClient\Interface;
 
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
+use Fukaeridesui\SuiRpcClient\Options\GetCheckpointsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
 
 interface ReadApiInterface
 {
@@ -44,4 +46,12 @@ interface ReadApiInterface
      * @return CheckpointResponse
      */
     public function getCheckpoint(string $sequenceNumber): CheckpointResponse;
+
+    /**
+     * Get checkpoints.
+     *
+     * @param GetCheckpointsOptions|null $options Options
+     * @return CheckpointsResponse
+     */
+    public function getCheckpoints(?GetCheckpointsOptions $options = null): CheckpointsResponse;
 }

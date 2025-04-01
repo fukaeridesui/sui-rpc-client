@@ -5,12 +5,14 @@ namespace Fukaeridesui\SuiRpcClient\Api;
 use Fukaeridesui\SuiRpcClient\Interface\ReadApiInterface;
 use Fukaeridesui\SuiRpcClient\Interface\HttpClientInterface;
 use Fukaeridesui\SuiRpcClient\Options\GetObjectOptions;
-use Fukaeridesui\SuiRpcClient\Responses\Read\GetObjectResponse;
+use Fukaeridesui\SuiRpcClient\Options\GetCheckpointsOptions;
 use Fukaeridesui\SuiRpcClient\Responses\ObjectResponseInterface;
-use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
-use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
+use Fukaeridesui\SuiRpcClient\Responses\Read\GetObjectResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
+use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
 class ReadApi implements ReadApiInterface
 {
@@ -89,5 +91,17 @@ class ReadApi implements ReadApiInterface
     {
         $response = $this->httpClient->request('sui_getCheckpoint', [$sequenceNumber]);
         return new CheckpointResponse($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCheckpoints(?GetCheckpointsOptions $options = null): CheckpointsResponse
+    {
+        $options = $options ?? new GetCheckpointsOptions();
+        $optionsArray = $options->toArray();
+        
+        $response = $this->httpClient->request('sui_getCheckpoints', $optionsArray);
+        return new CheckpointsResponse($response);
     }
 }
