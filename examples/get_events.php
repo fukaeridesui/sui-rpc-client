@@ -25,12 +25,28 @@ try {
     if (count($eventList) > 0) {
         foreach ($eventList as $index => $event) {
             echo "\nイベント " . ($index + 1) . ":\n";
-            echo "  ID: " . $event->getId() . "\n";
+            echo "  トランザクションダイジェスト: " . $event->getTxDigest() . "\n";
+            echo "  イベントシーケンス: " . $event->getEventSeq() . "\n";
+            echo "  完全なID: " . $event->getId() . "\n";
             echo "  タイプ: " . $event->getType() . "\n";
             echo "  パッケージID: " . $event->getPackageId() . "\n";
             echo "  モジュール: " . $event->getTransactionModule() . "\n";
             echo "  送信者: " . $event->getSender() . "\n";
-            echo "  タイムスタンプ: " . date('Y-m-d H:i:s', intval($event->getTimestampMs()) / 1000) . "\n";
+            
+            // タイムスタンプがある場合のみ表示
+            $timestamp = $event->getTimestampMs();
+            if (!empty($timestamp)) {
+                echo "  タイムスタンプ: " . date('Y-m-d H:i:s', intval($timestamp) / 1000) . "\n";
+            }
+            
+            // BCS情報があれば表示
+            if (!empty($event->getBcs())) {
+                echo "  BCS: " . $event->getBcs() . "\n";
+            }
+            
+            if (!empty($event->getBcsEncoding())) {
+                echo "  BCSエンコーディング: " . $event->getBcsEncoding() . "\n";
+            }
             
             // パースされたJSONデータがあれば表示
             $parsedJson = $event->getParsedJson();
@@ -44,4 +60,10 @@ try {
     }
 } catch (Exception $e) {
     echo "エラー: " . $e->getMessage() . "\n";
+    echo "スタックトレース:\n" . $e->getTraceAsString() . "\n";
+    
+    // PHPエラーハンドリングを設定（デバッグ用）
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 } 

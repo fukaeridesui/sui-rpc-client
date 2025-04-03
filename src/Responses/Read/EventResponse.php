@@ -7,13 +7,16 @@ namespace Fukaeridesui\SuiRpcClient\Responses\Read;
  */
 class EventResponse
 {
-    private string $id;
+    private string $txDigest;
+    private string $eventSeq;
     private string $packageId;
     private array $parsedJson;
     private string $sender;
     private string $timestampMs;
     private string $transactionModule;
     private string $type;
+    private string $bcsEncoding;
+    private string $bcs;
     private array $rawData;
 
     /**
@@ -21,25 +24,60 @@ class EventResponse
      */
     public function __construct(array $data)
     {
-        echo 'Hello world!!'; var_dump($data);exit;
-        $this->id = $data['id'] ?? '';
+        // echo 'Hello world!!'; var_dump($data);exit;
+        // idが配列かどうかチェック
+        if (isset($data['id']) && is_array($data['id'])) {
+            $this->txDigest = $data['id']['txDigest'] ?? '';
+            $this->eventSeq = $data['id']['eventSeq'] ?? '';
+        } else {
+            // idが配列でない場合はデフォルト値を設定
+            $this->txDigest = '';
+            $this->eventSeq = '';
+        }
+        
         $this->packageId = $data['packageId'] ?? '';
-        $this->transactionModule = $data['transactionModule'] ?? '';
-        $this->sender = $data['sender'] ?? '';
-        $this->type = $data['type'] ?? '';
-        $this->timestampMs = $data['timestampMs'] ?? '';
         $this->parsedJson = $data['parsedJson'] ?? [];
+        $this->sender = $data['sender'] ?? '';
+        $this->timestampMs = $data['timestampMs'] ?? '';
+        $this->transactionModule = $data['transactionModule'] ?? '';
+        $this->type = $data['type'] ?? '';
+        $this->bcsEncoding = $data['bcsEncoding'] ?? '';
+        $this->bcs = $data['bcs'] ?? '';
         $this->rawData = $data;
     }
 
     /**
-     * Get ID.
+     * Get transaction digest.
      *
-     * @return string Event ID
+     * @return string Transaction digest
+     */
+    public function getTxDigest(): string
+    {
+        return $this->txDigest;
+    }
+
+    /**
+     * Get event sequence.
+     *
+     * @return string Event sequence
+     */
+    public function getEventSeq(): string
+    {
+        return $this->eventSeq;
+    }
+
+    /**
+     * Get ID in string format (for backwards compatibility).
+     *
+     * @return string Event ID in format "txDigest:eventSeq"
      */
     public function getId(): string
     {
-        return $this->id;
+        if (empty($this->txDigest)) {
+            return '';
+        }
+        
+        return $this->txDigest . ':' . $this->eventSeq;
     }
 
     /**
@@ -90,6 +128,26 @@ class EventResponse
     public function getTimestampMs(): string
     {
         return $this->timestampMs;
+    }
+
+    /**
+     * Get BCS encoding.
+     *
+     * @return string BCS encoding
+     */
+    public function getBcsEncoding(): string
+    {
+        return $this->bcsEncoding;
+    }
+
+    /**
+     * Get BCS.
+     *
+     * @return string BCS
+     */
+    public function getBcs(): string
+    {
+        return $this->bcs;
     }
 
     /**
