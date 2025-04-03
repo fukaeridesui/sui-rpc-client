@@ -10,6 +10,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\LatestCheckpointSequenceNumberResponse;
 
 interface ReadApiInterface
 {
@@ -63,4 +64,11 @@ interface ReadApiInterface
      * @return EventsResponse Events response
      */
     public function getEvents(string $transactionDigest): EventsResponse;
+
+    /**
+     * Get the latest checkpoint sequence number
+     *
+     * @return LatestCheckpointSequenceNumberResponse Latest checkpoint sequence number
+     */
+    public function getLatestCheckpointSequenceNumber(): LatestCheckpointSequenceNumberResponse;
 }

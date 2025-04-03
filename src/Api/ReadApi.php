@@ -12,6 +12,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\LatestCheckpointSequenceNumberResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
@@ -113,5 +114,14 @@ class ReadApi implements ReadApiInterface
     {
         $response = $this->httpClient->request('sui_getEvents', [$transactionDigest]);
         return new EventsResponse($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLatestCheckpointSequenceNumber(): LatestCheckpointSequenceNumberResponse
+    {
+        $result = $this->httpClient->request('sui_getLatestCheckpointSequenceNumber', []);
+        return new LatestCheckpointSequenceNumberResponse($result);
     }
 }

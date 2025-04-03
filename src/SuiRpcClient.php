@@ -25,6 +25,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\LatestCheckpointSequenceNumberResponse;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -177,6 +178,16 @@ class SuiRpcClient
     public function getEvents(string $transactionDigest): EventsResponse
     {
         return $this->readApi->getEvents($transactionDigest);
+    }
+
+    /**
+     * Get the latest checkpoint sequence number.
+     *
+     * @return LatestCheckpointSequenceNumberResponse Latest checkpoint sequence number response
+     */
+    public function getLatestCheckpointSequenceNumber(): LatestCheckpointSequenceNumberResponse
+    {
+        return $this->readApi->getLatestCheckpointSequenceNumber();
     }
 
     //Coin Query APIs
