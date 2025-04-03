@@ -9,6 +9,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
 
 interface ReadApiInterface
 {
@@ -54,4 +55,12 @@ interface ReadApiInterface
      * @return CheckpointsResponse
      */
     public function getCheckpoints(?GetCheckpointsOptions $options = null): CheckpointsResponse;
+    
+    /**
+     * Get events for a transaction.
+     *
+     * @param string $transactionDigest Transaction digest
+     * @return EventsResponse Events response
+     */
+    public function getEvents(string $transactionDigest): EventsResponse;
 }

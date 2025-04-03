@@ -24,6 +24,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -165,6 +166,17 @@ class SuiRpcClient
     public function getCheckpoints(?GetCheckpointsOptions $options = null): CheckpointsResponse
     {
         return $this->readApi->getCheckpoints($options);
+    }
+
+    /**
+     * Get events for a transaction.
+     *
+     * @param string $transactionDigest Transaction digest
+     * @return EventsResponse Events response
+     */
+    public function getEvents(string $transactionDigest): EventsResponse
+    {
+        return $this->readApi->getEvents($transactionDigest);
     }
 
     //Coin Query APIs

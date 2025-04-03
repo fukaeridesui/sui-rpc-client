@@ -11,6 +11,7 @@ use Fukaeridesui\SuiRpcClient\Responses\Read\GetObjectResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\ChainIdentifierResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\CheckpointsResponse;
+use Fukaeridesui\SuiRpcClient\Responses\Read\EventsResponse;
 use Fukaeridesui\SuiRpcClient\Responses\Read\MultipleObjectsResponse;
 use Fukaeridesui\SuiRpcClient\Exception\SuiRpcException;
 
@@ -103,5 +104,14 @@ class ReadApi implements ReadApiInterface
         
         $response = $this->httpClient->request('sui_getCheckpoints', $optionsArray);
         return new CheckpointsResponse($response);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEvents(string $transactionDigest): EventsResponse
+    {
+        $response = $this->httpClient->request('sui_getEvents', [$transactionDigest]);
+        return new EventsResponse($response);
     }
 }
