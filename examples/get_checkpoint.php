@@ -4,28 +4,28 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Fukaeridesui\SuiRpcClient\SuiRpcClient;
 
-// RPC URLを設定
+// Set RPC URL
 $rpcUrl = 'https://fullnode.mainnet.sui.io:443';
 
-// クライアントを初期化
+// Initialize client
 $client = new SuiRpcClient($rpcUrl);
 
-// チェックポイントのシーケンス番号を指定
+// Specify checkpoint sequence number
 $sequenceNumber = "1000";
 
 try {
-    // チェックポイントを取得
+    // Get checkpoint
     $response = $client->getCheckpoint($sequenceNumber);
 
-    // 結果を表示
-    echo "チェックポイント情報:\n";
-    echo "シーケンス番号: " . $response->getSequenceNumber() . "\n";
-    echo "エポック: " . $response->getEpoch() . "\n";
-    echo "タイムスタンプ: " . date('Y-m-d H:i:s', $response->getTimestamp() / 1000) . "\n";
-    echo "ダイジェスト: " . $response->getDigest() . "\n";
-    echo "前のダイジェスト: " . ($response->getPreviousDigest() ?? 'なし') . "\n";
-    echo "ネットワーク総トランザクション数: " . $response->getNetworkTotalTransactions() . "\n";
-    echo "トランザクションダイジェスト数: " . count($response->getTransactionDigests()) . "\n";
+    // Display results
+    echo "Checkpoint information:\n";
+    echo "Sequence number: " . $response->getSequenceNumber() . "\n";
+    echo "Epoch: " . $response->getEpoch() . "\n";
+    echo "Timestamp: " . date('Y-m-d H:i:s', $response->getTimestamp() / 1000) . "\n";
+    echo "Digest: " . $response->getDigest() . "\n";
+    echo "Previous digest: " . ($response->getPreviousDigest() ?? 'none') . "\n";
+    echo "Network total transactions: " . $response->getNetworkTotalTransactions() . "\n";
+    echo "Transaction digest count: " . count($response->getTransactionDigests()) . "\n";
 } catch (Exception $e) {
-    echo "エラー: " . $e->getMessage() . "\n";
+    echo "Error: " . $e->getMessage() . "\n";
 } 

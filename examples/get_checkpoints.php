@@ -5,49 +5,49 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Fukaeridesui\SuiRpcClient\SuiRpcClient;
 use Fukaeridesui\SuiRpcClient\Options\GetCheckpointsOptions;
 
-// RPC URLを設定
-// テストネットを使用
+// Set RPC URL
+// Using testnet
 $rpcUrl = 'https://fullnode.testnet.sui.io:443';
 
-// クライアントを初期化
+// Initialize client
 $client = new SuiRpcClient($rpcUrl);
 
-// 基本的なオプションのみ設定
+// Set basic options only
 $options = new GetCheckpointsOptions();
 $options->setLimit(5)
-        ->setDescendingOrder(true); // 新しいチェックポイントから順に取得
+        ->setDescendingOrder(true); // Get newest checkpoints first
 
 try {
-    echo "チェックポイントを取得中...\n";
-    // チェックポイントのリストを取得
+    echo "Retrieving checkpoints...\n";
+    // Get list of checkpoints
     $response = $client->getCheckpoints($options);
 
-    // 結果を表示
-    echo "チェックポイント一覧:\n";
-    echo "総数: " . count($response->getData()) . "\n";
-    echo "次のページがあるか: " . ($response->hasNextPage() ? 'はい' : 'いいえ') . "\n";
-    echo "次のカーソル: " . ($response->getNextCursor() ?? 'なし') . "\n\n";
+    // Display results
+    echo "Checkpoint list:\n";
+    echo "Total count: " . count($response->getData()) . "\n";
+    echo "Has next page: " . ($response->hasNextPage() ? 'yes' : 'no') . "\n";
+    echo "Next cursor: " . ($response->getNextCursor() ?? 'none') . "\n\n";
 
     foreach ($response->getData() as $index => $checkpoint) {
-        echo "チェックポイント " . ($index + 1) . ":\n";
-        echo "  シーケンス番号: " . $checkpoint->getSequenceNumber() . "\n";
-        echo "  エポック: " . $checkpoint->getEpoch() . "\n";
-        echo "  タイムスタンプ: " . date('Y-m-d H:i:s', $checkpoint->getTimestamp() / 1000) . "\n";
-        echo "  ダイジェスト: " . $checkpoint->getDigest() . "\n";
+        echo "Checkpoint " . ($index + 1) . ":\n";
+        echo "  Sequence number: " . $checkpoint->getSequenceNumber() . "\n";
+        echo "  Epoch: " . $checkpoint->getEpoch() . "\n";
+        echo "  Timestamp: " . date('Y-m-d H:i:s', $checkpoint->getTimestamp() / 1000) . "\n";
+        echo "  Digest: " . $checkpoint->getDigest() . "\n";
         echo "\n";
     }
 
-    // 次のページがある場合、カーソルを表示
+    // If there's a next page, display the cursor
     if ($response->hasNextPage() && $response->getNextCursor() !== null) {
-        echo "次のカーソル値: " . $response->getNextCursor() . "\n";
+        echo "Next cursor value: " . $response->getNextCursor() . "\n";
     }
 } catch (Exception $e) {
-    echo "エラー: " . $e->getMessage() . "\n";
+    echo "Error: " . $e->getMessage() . "\n";
     
-    // デバッグ情報を追加
-    echo "詳細情報:\n";
-    echo "例外クラス: " . get_class($e) . "\n";
+    // Add debug information
+    echo "Detailed information:\n";
+    echo "Exception class: " . get_class($e) . "\n";
     if (method_exists($e, 'getTraceAsString')) {
-        echo "スタックトレース:\n" . $e->getTraceAsString() . "\n";
+        echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
     }
 } 

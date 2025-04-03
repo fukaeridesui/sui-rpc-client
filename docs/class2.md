@@ -18,7 +18,7 @@ classDiagram
         +getHttpClient()
     }
 
-    %% APIインターフェース
+    %% API Interfaces
     class ReadApiInterface {
         <<interface>>
         +getObject(objectId, options)
@@ -40,7 +40,7 @@ classDiagram
         +getRpcUrl()
     }
 
-    %% API実装クラス
+    %% API Implementation Classes
     class ReadApi {
         -HttpClientInterface httpClient
         +constructor(httpClient)
@@ -58,7 +58,7 @@ classDiagram
         +getCoinMetadata(options)
     }
 
-    %% HTTPクライアント実装
+    %% HTTP Client Implementations
     class GuzzleHttpClient {
         -Client httpClient
         -string rpcUrl
@@ -77,7 +77,7 @@ classDiagram
         +getRpcUrl()
     }
 
-    %% オプションクラス階層
+    %% Option Classes Hierarchy
     class BaseOptions {
         +constructor(options)
         +toArray()
@@ -89,7 +89,7 @@ classDiagram
     }
 
     class GetAllCoinsOptions {
-        %% PaginationOptionsから継承
+        %% Inherits from PaginationOptions
     }
 
     class GetCoinsOptions {
@@ -114,7 +114,7 @@ classDiagram
         +bool showStorageRebate
     }
 
-    %% レスポンスクラス
+    %% Response Classes
     class ObjectResponseInterface {
         <<interface>>
         +getObjectId()
@@ -224,7 +224,7 @@ classDiagram
         +toArray()
     }
 
-    %% 例外クラス
+    %% Exception Classes
     class SuiRpcException {
         -?int code
         -?string message
@@ -233,7 +233,7 @@ classDiagram
         +getData()
     }
 
-    %% 関係性
+    %% Relationships
     SuiRpcClient --> ReadApiInterface : uses
     SuiRpcClient --> CoinQueryApiInterface : uses
     SuiRpcClient --> HttpClientInterface : uses

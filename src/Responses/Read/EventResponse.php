@@ -24,17 +24,14 @@ class EventResponse
      */
     public function __construct(array $data)
     {
-        // echo 'Hello world!!'; var_dump($data);exit;
-        // idが配列かどうかチェック
         if (isset($data['id']) && is_array($data['id'])) {
             $this->txDigest = $data['id']['txDigest'] ?? '';
             $this->eventSeq = $data['id']['eventSeq'] ?? '';
         } else {
-            // idが配列でない場合はデフォルト値を設定
             $this->txDigest = '';
             $this->eventSeq = '';
         }
-        
+
         $this->packageId = $data['packageId'] ?? '';
         $this->parsedJson = $data['parsedJson'] ?? [];
         $this->sender = $data['sender'] ?? '';
@@ -76,7 +73,7 @@ class EventResponse
         if (empty($this->txDigest)) {
             return '';
         }
-        
+
         return $this->txDigest . ':' . $this->eventSeq;
     }
 
@@ -169,4 +166,4 @@ class EventResponse
     {
         return $this->rawData;
     }
-} 
+}
